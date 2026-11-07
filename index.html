@@ -1,970 +1,696 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Villa Permai - Sistem Manajemen &amp; Pemesanan</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        emerald: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            200: '#a7f3d0',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                            950: '#022c22',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        .fade-in { animation: fadeIn 0.25s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Villa Permai — Residence & Property Sales</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .fade-in { animation: fadeIn 0.25s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased">
 
-    <!-- ========================================== -->
-    <!-- 1. HALAMAN LOGIN (SPLIT-SCREEN MODERN)     -->
-    <!-- ========================================== -->
-    <div id="loginPage" class="min-h-screen flex flex-col lg:flex-row bg-white">
-        <!-- Sisi Kiri: Gambar Properti Mewah + Overlay Emerald -->
-        <div class="relative lg:w-1/2 min-h-[280px] lg:min-h-screen flex flex-col justify-between p-8 sm:p-12 text-white overflow-hidden bg-emerald-950">
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80" 
-                 alt="Villa Permai Luxury Residence" 
-                 onerror="this.src='https://placehold.co/1200x900/064e3b/d1fae5?text=Villa+Permai'"
-                 class="absolute inset-0 w-full h-full object-cover opacity-50">
-            <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/90 via-emerald-900/75 to-emerald-800/60"></div>
+  <!-- ==================== HALAMAN LOGIN ==================== -->
+  <div id="loginPage" class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Panel Kiri: Branding & Pemasaran Formal -->
+    <div class="lg:w-1/2 relative bg-emerald-950 text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-between overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=80" alt="Villa Permai" class="absolute inset-0 w-full h-full object-cover opacity-20" />
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/95 via-emerald-900/90 to-emerald-950/95"></div>
 
-            <!-- Logo -->
-            <div class="relative z-10 flex items-center space-x-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30 text-emerald-950">
-                    <i class="fa-solid fa-house-chimney text-lg"></i>
-                </div>
-                <div>
-                    <span class="text-xl font-extrabold tracking-tight block leading-none">Villa Permai</span>
-                    <span class="text-xs text-amber-300 font-medium tracking-wider uppercase">Residence &amp; Resort</span>
-                </div>
-            </div>
-
-            <!-- Tagline -->
-            <div class="relative z-10 my-auto py-8 lg:py-0 max-w-lg">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-400/20 text-amber-300 border border-amber-400/30 mb-4">
-                    <i class="fa-solid fa-shield-halved mr-1.5"></i> Portal Manajemen Terpadu
-                </span>
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight mb-4">
-                    Hunian Eksklusif, Kelola Lebih Praktis.
-                </h1>
-                <p class="text-sm sm:text-base text-emerald-100/90 leading-relaxed mb-6">
-                    Pantau ketersediaan unit, catat pemesanan tamu, dan lihat laporan pendapatan Villa Permai secara real-time dalam satu dashboard modern.
-                </p>
-                <div class="space-y-2 max-w-xs">
-                    <button type="button" onclick="fillDemoCredentials()" class="w-full py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-sm shadow-lg shadow-amber-500/20 transition-all flex items-center justify-center">
-                        <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>
-                        Gunakan Akun Demo
-                    </button>
-                    <p class="text-xs text-emerald-200/80 text-center">Demo: admin@villapermai.com / admin123</p>
-                </div>
-            </div>
+      <div class="relative z-10 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-amber-400 text-emerald-950 flex items-center justify-center text-xl shadow-lg">
+          <i class="fa-solid fa-house-chimney"></i>
         </div>
-
-        <!-- Sisi Kanan: Form Login -->
-        <div class="lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-16 bg-slate-50">
-            <div class="w-full max-w-md bg-white p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100">
-                <div class="mb-8">
-                    <h2 class="text-2xl font-extrabold text-slate-800">Selamat Datang Kembali</h2>
-                    <p class="text-sm text-slate-500 mt-1">Silakan masuk ke akun admin Anda untuk melanjutkan.</p>
-                </div>
-
-                <form id="loginForm" class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alamat Email</label>
-                        <div class="relative">
-                            <input type="email" id="loginEmail" required placeholder="admin@villapermai.com" 
-                                class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
-                            <i class="fa-regular fa-envelope text-slate-400 absolute left-4 top-3.5"></i>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label class="block text-sm font-semibold text-slate-700">Password</label>
-                            <a href="#" onclick="showToast('Hubungi IT Support Villa Permai untuk reset password.')" class="text-xs font-semibold text-emerald-700 hover:text-emerald-600">Lupa password?</a>
-                        </div>
-                        <div class="relative">
-                            <input type="password" id="loginPassword" required placeholder="••••••••" 
-                                class="w-full pl-11 pr-11 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
-                            <i class="fa-solid fa-lock text-slate-400 absolute left-4 top-3.5"></i>
-                            <button type="button" id="togglePasswordBtn" class="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600 p-1">
-                                <i class="fa-regular fa-eye" id="togglePasswordIcon"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="rememberMe" class="w-4 h-4 rounded border-slate-300 text-emerald-700 focus:ring-emerald-500">
-                            <span class="ml-2 text-sm text-slate-600">Ingat Saya</span>
-                        </label>
-                    </div>
-
-                    <button type="submit" class="w-full py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-800/20 transition-all flex items-center justify-center">
-                        <span>Masuk ke Dashboard</span>
-                        <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </button>
-                </form>
-
-                <div class="relative my-6">
-                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
-                    <div class="relative flex justify-center text-xs"><span class="px-3 bg-white text-slate-400 font-medium">Atau coba langsung</span></div>
-                </div>
-
-                <button type="button" onclick="loginWithDemo()" class="w-full py-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 font-bold text-sm transition-all flex items-center justify-center">
-                    <i class="fa-solid fa-wand-magic-sparkles mr-2 text-amber-600"></i>
-                    Masuk dengan Akun Demo
-                </button>
-            </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">Villa Permai</h1>
+          <p class="text-[11px] uppercase tracking-widest text-amber-300 font-semibold">Residence & Property</p>
         </div>
+      </div>
+
+      <div class="relative z-10 my-12 lg:my-0">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-800/70 border border-emerald-700/60 text-amber-300 text-xs font-semibold mb-5">
+          <i class="fa-solid fa-shield-halved"></i> Portal Manajemen Properti
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-5">
+          Hunian Eksklusif,<br />Investasi Masa Depan.
+        </h2>
+        <p class="text-emerald-100/90 text-sm sm:text-base leading-relaxed max-w-md mb-8">
+          Wujudkan hunian impian bersama Villa Permai. Kami menghadirkan unit rumah eksklusif dengan desain arsitektur modern, lingkungan yang asri dan aman, serta nilai investasi terbaik untuk masa depan keluarga Anda.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4 text-xs text-emerald-200/90 font-medium">
+          <span class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-amber-400"></i> Legalitas SHM Terjamin</span>
+          <span class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-amber-400"></i> Lokasi Strategis</span>
+          <span class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-amber-400"></i> Keamanan 24 Jam</span>
+        </div>
+      </div>
+
+      <div class="relative z-10 text-xs text-emerald-300/70">
+        &copy; 2026 Villa Permai Residence. Hak Cipta Dilindungi.
+      </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 2. LAYOUT DASHBOARD UTAMA (SETELAH LOGIN)  -->
-    <!-- ========================================== -->
-    <div id="appLayout" class="hidden h-screen overflow-hidden">
-        <!-- Overlay Mobile Sidebar -->
-        <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/60 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+    <!-- Panel Kanan: Form Login -->
+    <div class="lg:w-1/2 flex items-center justify-center p-6 sm:p-12 bg-white">
+      <div class="w-full max-w-md">
+        <div class="mb-8">
+          <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Selamat Datang Kembali</h3>
+          <p class="text-sm text-slate-500">Silakan masuk menggunakan akun administrator Anda.</p>
+        </div>
 
-        <!-- SIDEBAR -->
-        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-gradient-to-b from-emerald-900 via-emerald-900 to-emerald-950 text-white transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 transition-transform duration-300 ease-in-out flex flex-col shadow-2xl">
-            <!-- Logo Brand -->
-            <div class="flex items-center justify-between h-16 px-6 border-b border-emerald-800/70">
-                <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/20 text-emerald-950">
-                        <i class="fa-solid fa-house-chimney text-base"></i>
-                    </div>
-                    <div>
-                        <span class="text-lg font-extrabold tracking-tight block leading-none">Villa Permai</span>
-                        <span class="text-[11px] text-amber-300 font-medium tracking-wide">Residence &amp; Resort</span>
-                    </div>
-                </div>
-                <button id="closeSidebarBtn" class="lg:hidden text-emerald-200 hover:text-white p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+        <form id="loginForm" class="space-y-5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Email</label>
+            <div class="relative">
+              <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input type="email" id="loginEmail" required value="admin@villapermai.com" placeholder="admin@villapermai.com"
+                class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 outline-none text-sm transition" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Kata Sandi</label>
+            <div class="relative">
+              <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input type="password" id="loginPassword" required value="admin123" placeholder="••••••••"
+                class="w-full pl-11 pr-11 py-3 rounded-xl border border-slate-200 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 outline-none text-sm transition" />
+              <button type="button" onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                <i id="eyeIcon" class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs">
+            <label class="flex items-center gap-2 text-slate-600 cursor-pointer">
+              <input type="checkbox" checked class="rounded border-slate-300 text-emerald-700 focus:ring-emerald-600" />
+              Ingat saya
+            </label>
+            <span class="text-slate-400">Demo: admin@villapermai.com / admin123</span>
+          </div>
+
+          <button type="submit"
+            class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-emerald-900/20 transition flex items-center justify-center gap-2">
+            <span>Masuk ke Dashboard</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== APLIKASI DASHBOARD (SPA) ==================== -->
+  <div id="appPage" class="hidden min-h-screen flex bg-slate-50">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-emerald-950 text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-200 flex flex-col">
+      <div class="p-6 flex items-center justify-between border-b border-emerald-900/80">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-amber-400 text-emerald-950 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-house-chimney"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-base leading-none">Villa Permai</h1>
+            <span class="text-[10px] text-emerald-300 uppercase tracking-wider">Sales Admin</span>
+          </div>
+        </div>
+        <button onclick="toggleSidebar()" class="lg:hidden text-emerald-300 hover:text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <nav class="flex-1 p-4 space-y-1.5 text-sm">
+        <button onclick="switchTab('dashboard')" data-tab="dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-800/80 text-white font-medium transition">
+          <i class="fa-solid fa-chart-pie w-5 text-center"></i> Dashboard
+        </button>
+        <button onclick="switchTab('units')" data-tab="units" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-emerald-200 hover:bg-emerald-900/60 hover:text-white font-medium transition">
+          <i class="fa-solid fa-building w-5 text-center"></i> Katalog Unit (9)
+        </button>
+        <button onclick="switchTab('bookings')" data-tab="bookings" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-emerald-200 hover:bg-emerald-900/60 hover:text-white font-medium transition">
+          <i class="fa-solid fa-file-signature w-5 text-center"></i> Data Penjualan
+        </button>
+        <button onclick="switchTab('finance')" data-tab="finance" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-emerald-200 hover:bg-emerald-900/60 hover:text-white font-medium transition">
+          <i class="fa-solid fa-wallet w-5 text-center"></i> Laporan Keuangan
+        </button>
+        <button onclick="switchTab('settings')" data-tab="settings" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-emerald-200 hover:bg-emerald-900/60 hover:text-white font-medium transition">
+          <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
+        </button>
+      </nav>
+
+      <div class="p-4 border-t border-emerald-900/80">
+        <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-rose-300 hover:bg-rose-950/60 hover:text-rose-200 text-sm font-medium transition">
+          <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> Keluar
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+      <!-- Topbar -->
+      <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200 px-4 sm:px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg border border-slate-200 text-slate-600">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h2 id="pageTitle" class="text-lg sm:text-xl font-bold text-slate-900">Dashboard Ringkasan</h2>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="openBookingModal()" class="bg-emerald-800 hover:bg-emerald-900 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Catat Penjualan</span>
+          </button>
+          <div class="flex items-center gap-2.5 pl-3 border-l border-slate-200">
+            <div class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-sm">A</div>
+            <div class="hidden sm:block text-left">
+              <p class="text-xs font-bold text-slate-800">Admin Utama</p>
+              <p class="text-[11px] text-slate-500">admin@villapermai.com</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Tab Views -->
+      <main class="flex-1 p-4 sm:p-8 space-y-6">
+
+        <!-- TAB 1: DASHBOARD -->
+        <section id="tab-dashboard" class="tab-content space-y-6 fade-in">
+          <!-- KPI Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-semibold text-slate-500 uppercase">Total Penjualan</span>
+                <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-rupiah-sign"></i></span>
+              </div>
+              <p id="kpiRevenue" class="text-xl sm:text-2xl font-extrabold text-slate-900">Rp 0</p>
+              <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-circle-check"></i> Dari transaksi Lunas</p>
             </div>
 
-            <!-- Menu Navigasi SPA -->
-            <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
-                <p class="px-4 text-[11px] font-semibold uppercase tracking-wider text-emerald-400/80 mb-2">Menu Utama</p>
-                
-                <button onclick="switchPage('dashboard')" data-page="dashboard" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-emerald-800/80 text-white font-semibold shadow-sm border border-emerald-700/50 transition-all text-left">
-                    <i class="fa-solid fa-chart-pie w-5 text-center text-amber-400"></i>
-                    <span>Dashboard</span>
-                </button>
-
-                <button onclick="switchPage('units')" data-page="units" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-emerald-100/80 hover:bg-emerald-800/50 hover:text-white font-medium transition-all text-left">
-                    <i class="fa-solid fa-building w-5 text-center text-emerald-300"></i>
-                    <span>Daftar Unit</span>
-                </button>
-
-                <button onclick="switchPage('bookings')" data-page="bookings" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-emerald-100/80 hover:bg-emerald-800/50 hover:text-white font-medium transition-all text-left">
-                    <i class="fa-solid fa-calendar-check w-5 text-center text-emerald-300"></i>
-                    <span>Data Pemesanan</span>
-                </button>
-
-                <button onclick="switchPage('finance')" data-page="finance" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-emerald-100/80 hover:bg-emerald-800/50 hover:text-white font-medium transition-all text-left">
-                    <i class="fa-solid fa-file-invoice-dollar w-5 text-center text-emerald-300"></i>
-                    <span>Laporan Keuangan</span>
-                </button>
-
-                <button onclick="switchPage('settings')" data-page="settings" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-emerald-100/80 hover:bg-emerald-800/50 hover:text-white font-medium transition-all text-left">
-                    <i class="fa-solid fa-gear w-5 text-center text-emerald-300"></i>
-                    <span>Pengaturan</span>
-                </button>
-            </nav>
-
-            <!-- Tombol Keluar / Logout -->
-            <div class="p-4 border-t border-emerald-800/70 bg-emerald-950/50">
-                <button onclick="logout()" class="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 hover:text-rose-200 border border-rose-500/20 font-semibold text-sm transition-all">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Keluar / Logout</span>
-                </button>
-            </div>
-        </aside>
-
-        <!-- KONTEN UTAMA -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <!-- TOPBAR -->
-            <header class="h-16 bg-white/90 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-20 sticky top-0">
-                <div class="flex items-center space-x-3 sm:space-x-4">
-                    <button id="openSidebarBtn" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none">
-                        <i class="fa-solid fa-bars text-lg"></i>
-                    </button>
-                    <div>
-                        <h1 id="topbarTitle" class="text-base sm:text-lg font-bold text-slate-800 leading-tight">Dashboard</h1>
-                        <p class="text-xs text-slate-500 hidden sm:block">Villa Permai Residence &bull; Manajemen Properti</p>
-                    </div>
-                </div>
-
-                <div class="flex items-center space-x-3 sm:space-x-4">
-                    <!-- Pencarian Global -->
-                    <div class="relative hidden md:block w-64 lg:w-72">
-                        <input type="text" id="globalSearch" placeholder="Cari unit atau nama tamu..." 
-                            class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 bg-slate-50/80 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
-                        <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3.5 top-2.5 text-sm"></i>
-                    </div>
-
-                    <!-- Notifikasi -->
-                    <button onclick="showToast('Semua sistem berjalan normal. 1 pemesanan menunggu konfirmasi.')" class="relative p-2.5 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 border border-slate-200/80 transition-colors">
-                        <i class="fa-regular fa-bell text-base"></i>
-                        <span class="absolute top-2 right-2 w-2 h-2 bg-amber-500 rounded-full ring-2 ring-white"></span>
-                    </button>
-
-                    <!-- Profil Admin -->
-                    <div class="flex items-center space-x-2.5 pl-2 border-l border-slate-200">
-                        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-800 to-emerald-600 text-amber-300 flex items-center justify-center font-bold text-xs shadow-sm">
-                            RH
-                        </div>
-                        <div class="hidden sm:block text-left">
-                            <p id="topbarAdminName" class="text-xs font-bold text-slate-800 leading-tight">Rahman Hafiz</p>
-                            <p class="text-[11px] text-slate-500">Administrator</p>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- AREA HALAMAN DINAMIS -->
-            <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-
-                <!-- ========================================== -->
-                <!-- 3. HALAMAN DASHBOARD                       -->
-                <!-- ========================================== -->
-                <div id="page-dashboard" class="page-view space-y-7 fade-in">
-                    <!-- Hero Banner Sambutan -->
-                    <section class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-700 text-white p-6 sm:p-8 shadow-lg shadow-emerald-900/15">
-                        <div class="absolute -right-10 -top-10 w-56 h-56 rounded-full bg-amber-400/10 blur-2xl pointer-events-none"></div>
-                        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div class="space-y-2 max-w-xl">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                                    <i class="fa-solid fa-sparkles mr-1.5"></i> Ringkasan Hari Ini
-                                </span>
-                                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Selamat Datang di Villa Permai</h2>
-                                <p class="text-sm sm:text-base text-emerald-100/90 leading-relaxed">
-                                    Saat ini terdapat <strong id="heroAvailableText" class="text-white">6 unit tersedia</strong> dan <strong id="heroOccupiedText" class="text-amber-300">2 unit terisi</strong>. Pantau performa sewa dan catat pemesanan baru dengan mudah.
-                                </p>
-                            </div>
-                            <button onclick="openBookingModal('')" class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-emerald-950 font-bold text-sm shadow-lg shadow-amber-500/25 transition-all flex-shrink-0">
-                                <i class="fa-solid fa-plus mr-2"></i> Tambah Pemesanan
-                            </button>
-                        </div>
-                    </section>
-
-                    <!-- 4 Kartu KPI -->
-                    <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Pendapatan</p>
-                                    <p id="kpiTotalRevenue" class="text-2xl font-extrabold text-emerald-700 mt-1">Rp 16,1 Jt</p>
-                                </div>
-                                <div class="w-12 h-12 rounded-xl bg-emerald-800 text-amber-300 flex items-center justify-center text-xl">
-                                    <i class="fa-solid fa-wallet"></i>
-                                </div>
-                            </div>
-                            <div class="mt-4 flex items-center text-xs">
-                                <span class="text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-arrow-up mr-1"></i> +14.2%</span>
-                                <span class="text-slate-400 ml-2">bulan ini</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Unit Tersedia</p>
-                                    <p id="kpiAvailableUnits" class="text-2xl font-extrabold text-slate-800 mt-1">6 / 9 Unit</p>
-                                </div>
-                                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
-                                    <i class="fa-solid fa-key"></i>
-                                </div>
-                            </div>
-                            <div class="mt-4 flex items-center text-xs">
-                                <span id="kpiOccupiedBadge" class="text-amber-600 font-semibold bg-amber-50 px-2 py-0.5 rounded-md">2 Unit Terisi</span>
-                                <span class="text-slate-400 ml-2">siap huni</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Pemesanan Baru</p>
-                                    <p id="kpiTotalBookings" class="text-2xl font-extrabold text-slate-800 mt-1">4</p>
-                                </div>
-                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                </div>
-                            </div>
-                            <div class="mt-4 flex items-center text-xs">
-                                <span class="text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-arrow-up mr-1"></i> +25%</span>
-                                <span class="text-slate-400 ml-2">dari bulan lalu</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Tingkat Okupansi</p>
-                                    <p id="kpiOccupancyRate" class="text-2xl font-extrabold text-slate-800 mt-1">22%</p>
-                                </div>
-                                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
-                                    <i class="fa-solid fa-chart-line"></i>
-                                </div>
-                            </div>
-                            <div class="mt-4 flex items-center text-xs">
-                                <span class="text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md">Optimal</span>
-                                <span class="text-slate-400 ml-2">rata-rata kuartal</span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Grafik Chart.js & Aktivitas Terbaru -->
-                    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col">
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <h3 class="text-base font-bold text-slate-800">Tren Pendapatan 6 Bulan</h3>
-                                    <p class="text-xs text-slate-500">Performa pendapatan sewa Villa Permai (Jun - Nov 2026)</p>
-                                </div>
-                                <span class="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-semibold">2026</span>
-                            </div>
-                            <div class="relative flex-1 min-h-[260px] w-full">
-                                <canvas id="revenueChart"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-base font-bold text-slate-800">Aktivitas Terbaru</h3>
-                                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">Live</span>
-                            </div>
-                            <div class="space-y-4 flex-1">
-                                <div class="flex items-start space-x-3">
-                                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 mt-0.5"><i class="fa-solid fa-check text-xs"></i></div>
-                                    <div>
-                                        <p class="text-sm font-semibold text-slate-800">Pembayaran Lunas</p>
-                                        <p class="text-xs text-slate-500">Siti Aminah melunasi sewa <strong>Villa Melati</strong>.</p>
-                                        <p class="text-[11px] text-slate-400 mt-0.5">2 jam lalu</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-3">
-                                    <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0 mt-0.5"><i class="fa-solid fa-clock text-xs"></i></div>
-                                    <div>
-                                        <p class="text-sm font-semibold text-slate-800">Pemesanan Baru</p>
-                                        <p class="text-xs text-slate-500">Rina Kartika memesan <strong>Villa Cendana</strong>.</p>
-                                        <p class="text-[11px] text-slate-400 mt-0.5">5 jam lalu</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-3">
-                                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 mt-0.5"><i class="fa-solid fa-wrench text-xs"></i></div>
-                                    <div>
-                                        <p class="text-sm font-semibold text-slate-800">Perawatan Unit</p>
-                                        <p class="text-xs text-slate-500">Servis AC <strong>Villa Kenanga</strong> telah selesai.</p>
-                                        <p class="text-[11px] text-slate-400 mt-0.5">Kemarin</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <!-- ========================================== -->
-                <!-- 4. HALAMAN DAFTAR UNIT                     -->
-                <!-- ========================================== -->
-                <div id="page-units" class="page-view hidden space-y-6 fade-in">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800">Daftar Unit Villa Permai</h2>
-                            <p class="text-sm text-slate-500">9 unit properti eksklusif dengan pilihan fasilitas lengkap.</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <select id="unitStatusFilter" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                <option value="Semua">Semua Status (9)</option>
-                                <option value="Tersedia">Tersedia</option>
-                                <option value="Terisi">Terisi</option>
-                                <option value="Perawatan">Perawatan</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="unitGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <!-- Dirender oleh JavaScript -->
-                    </div>
-                </div>
-
-                <!-- ========================================== -->
-                <!-- 5. HALAMAN DATA PEMESANAN                  -->
-                <!-- ========================================== -->
-                <div id="page-bookings" class="page-view hidden space-y-6 fade-in">
-                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
-                        <div class="p-5 sm:p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div>
-                                <h2 class="text-lg font-bold text-slate-800">Data Pemesanan Penyewa</h2>
-                                <p class="text-sm text-slate-500">Kelola transaksi sewa dan status pembayaran tamu.</p>
-                            </div>
-                            <div class="flex flex-wrap items-center gap-3">
-                                <input type="text" id="bookingSearchInput" placeholder="Cari nama tamu..." 
-                                    class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                <select id="statusFilter" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                    <option value="Semua">Semua Status</option>
-                                    <option value="Lunas">Lunas</option>
-                                    <option value="Menunggu">Menunggu</option>
-                                    <option value="Dibatalkan">Dibatalkan</option>
-                                </select>
-                                <button onclick="openBookingModal('')" class="px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-bold transition-colors">
-                                    <i class="fa-solid fa-plus mr-1.5"></i> Tambah Baru
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200">
-                                        <th class="py-3.5 px-6 font-semibold">Nama Tamu</th>
-                                        <th class="py-3.5 px-6 font-semibold">Unit</th>
-                                        <th class="py-3.5 px-6 font-semibold">Tanggal Mulai</th>
-                                        <th class="py-3.5 px-6 font-semibold">Durasi</th>
-                                        <th class="py-3.5 px-6 font-semibold">Total Biaya</th>
-                                        <th class="py-3.5 px-6 font-semibold">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bookingTableBody" class="divide-y divide-slate-100 text-sm">
-                                    <!-- Dirender oleh JavaScript -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ========================================== -->
-                <!-- 6. HALAMAN LAPORAN KEUANGAN                -->
-                <!-- ========================================== -->
-                <div id="page-finance" class="page-view hidden space-y-6 fade-in">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                            <p class="text-xs font-semibold text-slate-500 uppercase">Pemasukan Lunas (Nov)</p>
-                            <p id="financePaid" class="text-2xl font-extrabold text-emerald-700 mt-1">Rp 16.100.000</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                            <p class="text-xs font-semibold text-slate-500 uppercase">Menunggu Pembayaran</p>
-                            <p id="financePending" class="text-2xl font-extrabold text-amber-600 mt-1">Rp 4.800.000</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                            <p class="text-xs font-semibold text-slate-500 uppercase">Estimasi Total</p>
-                            <p id="financeTotal" class="text-2xl font-extrabold text-slate-800 mt-1">Rp 20.900.000</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                        <div class="p-5 sm:p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-800">Rincian Transaksi Keuangan</h3>
-                                <p class="text-sm text-slate-500">Otomatis tersinkronisasi dengan Data Pemesanan.</p>
-                            </div>
-                            <button onclick="showToast('Laporan keuangan berhasil diunduh (PDF).')" class="px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-bold transition-colors">
-                                <i class="fa-solid fa-download mr-2"></i> Unduh Rekap
-                            </button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200">
-                                        <th class="py-3.5 px-6 font-semibold">Nama Tamu</th>
-                                        <th class="py-3.5 px-6 font-semibold">Unit</th>
-                                        <th class="py-3.5 px-6 font-semibold">Tanggal</th>
-                                        <th class="py-3.5 px-6 font-semibold">Nominal</th>
-                                        <th class="py-3.5 px-6 font-semibold">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="financeTableBody" class="divide-y divide-slate-100 text-sm">
-                                    <!-- Dirender oleh JavaScript -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ========================================== -->
-                <!-- 7. HALAMAN PENGATURAN                      -->
-                <!-- ========================================== -->
-                <div id="page-settings" class="page-view hidden space-y-6 fade-in max-w-3xl">
-                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
-                        <h2 class="text-lg font-bold text-slate-800 mb-1">Pengaturan Profil &amp; Properti</h2>
-                        <p class="text-sm text-slate-500 mb-6">Perbarui informasi admin dan identitas dasar Villa Permai.</p>
-
-                        <form id="settingsForm" class="space-y-5">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Nama Admin</label>
-                                    <input type="text" id="settingAdminName" value="Rahman Hafiz" required
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Email Admin</label>
-                                    <input type="email" value="admin@villapermai.id" required
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-1">Nama Properti</label>
-                                <input type="text" value="Villa Permai Residence & Resort" required
-                                    class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-1">Alamat Kantor Pemasaran</label>
-                                <textarea rows="2" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">Jl. Villa Permai Raya No. 88, Kota Wisata</textarea>
-                            </div>
-
-                            <div class="pt-2 flex justify-end">
-                                <button type="submit" class="px-6 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-bold shadow-sm transition-colors">
-                                    <i class="fa-solid fa-floppy-disk mr-2"></i> Simpan Pengaturan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-            </main>
-        </div>
-    </div>
-
-    <!-- MODAL FORMULIR PEMESANAN -->
-    <div id="bookingModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
-            <div class="px-6 py-4 bg-gradient-to-r from-emerald-900 to-emerald-800 text-white flex items-center justify-between">
-                <div class="flex items-center space-x-2.5">
-                    <i class="fa-solid fa-calendar-plus text-amber-400"></i>
-                    <h3 class="text-lg font-bold">Formulir Pemesanan Unit</h3>
-                </div>
-                <button onclick="closeBookingModal()" class="text-emerald-200 hover:text-white p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-semibold text-slate-500 uppercase">Total Transaksi</span>
+                <span class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-file-contract"></i></span>
+              </div>
+              <p id="kpiBookings" class="text-2xl font-extrabold text-slate-900">0</p>
+              <p id="kpiPendingNote" class="text-xs text-amber-600 font-medium mt-1">0 menunggu pelunasan</p>
             </div>
 
-            <form id="bookingForm" class="p-6 space-y-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-semibold text-slate-500 uppercase">Unit Terjual</span>
+                <span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-house-circle-check"></i></span>
+              </div>
+              <p id="kpiOccupancy" class="text-2xl font-extrabold text-slate-900">0%</p>
+              <p id="kpiUnitCount" class="text-xs text-slate-500 font-medium mt-1">0 dari 9 unit terjual</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-semibold text-slate-500 uppercase">Unit Tersedia</span>
+                <span class="w-9 h-9 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center"><i class="fa-solid fa-key"></i></span>
+              </div>
+              <p id="kpiAvailable" class="text-2xl font-extrabold text-slate-900">0</p>
+              <p class="text-xs text-teal-600 font-medium mt-1">Siap dipasarkan / akad</p>
+            </div>
+          </div>
+
+          <!-- Chart & Recent Activity -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">Nama Tamu / Penyewa</label>
-                    <input type="text" id="inputNama" required placeholder="Contoh: Andi Wijaya" 
-                        class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                  <h3 class="font-bold text-slate-900">Tren Penjualan Bulanan</h3>
+                  <p class="text-xs text-slate-500">Data otomatis tersinkronisasi dengan status Lunas</p>
                 </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">Pilih Unit Villa</label>
-                    <select id="inputUnit" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-                        <option value="">-- Pilih Unit --</option>
-                    </select>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Tanggal Mulai</label>
-                        <input type="date" id="inputTanggal" required 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Durasi (Bulan)</label>
-                        <input type="number" id="inputDurasi" min="1" max="24" value="1" required 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">Status Pembayaran</label>
-                    <select id="inputStatus" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-                        <option value="Menunggu">Menunggu</option>
-                        <option value="Lunas">Lunas</option>
-                        <option value="Dibatalkan">Dibatalkan</option>
-                    </select>
-                </div>
-                <div class="pt-3 flex items-center justify-end space-x-3 border-t border-slate-100">
-                    <button type="button" onclick="closeBookingModal()" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100">Batal</button>
-                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-bold shadow-sm">Simpan Pemesanan</button>
-                </div>
-            </form>
-        </div>
+              </div>
+              <div class="h-64">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+              <h3 class="font-bold text-slate-900 mb-4">Transaksi Terbaru</h3>
+              <div id="recentActivityList" class="space-y-3 flex-1 overflow-y-auto max-h-64 pr-1 text-sm"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: DAFTAR UNIT -->
+        <section id="tab-units" class="tab-content hidden space-y-6 fade-in">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">Katalog Unit Villa Permai</h3>
+              <p class="text-xs text-slate-500">9 tipe unit rumah eksklusif siap huni dengan sertifikat SHM</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="filterUnits('Semua')" class="unit-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-800 text-white">Semua</button>
+              <button onclick="filterUnits('Tersedia')" class="unit-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600">Tersedia</button>
+              <button onclick="filterUnits('Terjual')" class="unit-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600">Terjual</button>
+            </div>
+          </div>
+          <div id="unitsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- TAB 3: DATA PENJUALAN -->
+        <section id="tab-bookings" class="tab-content hidden space-y-6 fade-in">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+              <div class="relative w-full sm:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="bookingSearch" oninput="renderBookings()" placeholder="Cari nama pembeli atau unit..."
+                  class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 text-xs focus:border-emerald-600 outline-none" />
+              </div>
+              <select id="bookingStatusFilter" onchange="renderBookings()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium outline-none">
+                <option value="Semua">Semua Status</option>
+                <option value="Lunas">Lunas</option>
+                <option value="Menunggu">Menunggu</option>
+                <option value="Dibatalkan">Dibatalkan</option>
+              </select>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs sm:text-sm">
+                <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-semibold">
+                  <tr>
+                    <th class="px-5 py-3.5">ID</th>
+                    <th class="px-5 py-3.5">Nama Pembeli</th>
+                    <th class="px-5 py-3.5">Unit</th>
+                    <th class="px-5 py-3.5">Tanggal</th>
+                    <th class="px-5 py-3.5">Harga Unit</th>
+                    <th class="px-5 py-3.5">Status (Klik untuk ubah)</th>
+                  </tr>
+                </thead>
+                <tbody id="bookingsTableBody" class="divide-y divide-slate-100"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: LAPORAN KEUANGAN -->
+        <section id="tab-finance" class="tab-content hidden space-y-6 fade-in">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <p class="text-xs font-semibold text-slate-500 uppercase">Pemasukan Lunas</p>
+              <p id="finPaid" class="text-xl sm:text-2xl font-extrabold text-emerald-700 mt-1">Rp 0</p>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <p class="text-xs font-semibold text-slate-500 uppercase">Menunggu Pelunasan</p>
+              <p id="finPending" class="text-xl sm:text-2xl font-extrabold text-amber-600 mt-1">Rp 0</p>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <p class="text-xs font-semibold text-slate-500 uppercase">Total Transaksi Valid</p>
+              <p id="finCount" class="text-2xl font-extrabold text-slate-900 mt-1">0 Transaksi</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-slate-200 flex items-center justify-between">
+              <h3 class="font-bold text-slate-900">Rincian Transaksi Penjualan</h3>
+              <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs sm:text-sm">
+                <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-semibold">
+                  <tr>
+                    <th class="px-5 py-3.5">Tanggal</th>
+                    <th class="px-5 py-3.5">Keterangan</th>
+                    <th class="px-5 py-3.5">Status</th>
+                    <th class="px-5 py-3.5 text-right">Nominal</th>
+                  </tr>
+                </thead>
+                <tbody id="financeTableBody" class="divide-y divide-slate-100"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 5: PENGATURAN -->
+        <section id="tab-settings" class="tab-content hidden fade-in">
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-xl space-y-4">
+            <h3 class="font-bold text-slate-900 text-lg">Pengaturan Properti</h3>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Perumahan</label>
+              <input type="text" value="Villa Permai Residence & Property" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Email Marketing</label>
+              <input type="email" value="admin@villapermai.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm" />
+            </div>
+            <button onclick="showToast('Pengaturan berhasil disimpan!')" class="bg-emerald-800 hover:bg-emerald-900 text-white text-sm font-semibold px-5 py-2.5 rounded-xl">
+              Simpan Perubahan
+            </button>
+          </div>
+        </section>
+
+      </main>
     </div>
+  </div>
 
-    <!-- TOAST NOTIFIKASI -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 hidden items-center space-x-3 bg-emerald-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-emerald-700">
-        <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
-            <i class="fa-solid fa-check text-sm"></i>
+  <!-- MODAL TAMBAH PENJUALAN -->
+  <div id="bookingModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-bold text-lg text-slate-900">Catat Penjualan Unit</h3>
+        <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="bookingForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Pembeli</label>
+          <input type="text" id="guestName" required placeholder="Contoh: Budi Santoso" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-emerald-600" />
         </div>
-        <span id="toastMessage" class="text-sm font-medium"></span>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Unit</label>
+          <select id="guestUnit" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-emerald-600"></select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal Transaksi</label>
+            <input type="date" id="guestDate" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-emerald-600" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Status Pembayaran</label>
+            <select id="guestStatus" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-emerald-600">
+              <option value="Lunas">Lunas</option>
+              <option value="Menunggu">Menunggu</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-3 rounded-xl transition">
+          Simpan Transaksi
+        </button>
+      </form>
     </div>
+  </div>
 
-    <!-- JAVASCRIPT SPA & INTERAKTIVITAS -->
-    <script>
-        // Data 9 Unit Villa Permai
-        const units = [
-            { id: 1, nama: "Villa Melati", blok: "Blok B-04", harga: 3500000, status: "Terisi", kamar: 3, mandi: 2, luas: "120 m²", ekstra: "WiFi & AC", gambar: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" },
-            { id: 2, nama: "Villa Anggrek", blok: "Blok A-01", harga: 2800000, status: "Tersedia", kamar: 2, mandi: 1, luas: "90 m²", ekstra: "WiFi & Carport", gambar: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" },
-            { id: 3, nama: "Villa Cendana", blok: "Blok C-02", harga: 4800000, status: "Tersedia", kamar: 4, mandi: 3, luas: "160 m²", ekstra: "Kolam Renang", gambar: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" },
-            { id: 4, nama: "Villa Kenanga", blok: "Blok D-05", harga: 3200000, status: "Tersedia", kamar: 3, mandi: 2, luas: "110 m²", ekstra: "Taman & WiFi", gambar: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" },
-            { id: 5, nama: "Villa Bougenville", blok: "Blok E-01", harga: 5500000, status: "Tersedia", kamar: 4, mandi: 4, luas: "185 m²", ekstra: "Private Pool", gambar: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80" },
-            { id: 6, nama: "Villa Edelweiss", blok: "Blok F-03", harga: 4200000, status: "Terisi", kamar: 3, mandi: 3, luas: "140 m²", ekstra: "Dapur & Balkon", gambar: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80" },
-            { id: 7, nama: "Villa Flamboyan", blok: "Blok G-02", harga: 2500000, status: "Tersedia", kamar: 2, mandi: 1, luas: "85 m²", ekstra: "AC & Parkir", gambar: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80" },
-            { id: 8, nama: "Villa Kamboja", blok: "Blok H-06", harga: 3900000, status: "Perawatan", kamar: 3, mandi: 2, luas: "130 m²", ekstra: "Gazebo & WiFi", gambar: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80" },
-            { id: 9, nama: "Villa Teratai", blok: "Blok J-08", harga: 6200000, status: "Tersedia", kamar: 5, mandi: 4, luas: "220 m²", ekstra: "Pool & Rooftop", gambar: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80" }
-        ];
+  <!-- TOAST -->
+  <div id="toast" class="hidden fixed bottom-5 right-5 z-50 bg-emerald-900 text-white px-4 py-3 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-2.5">
+    <i class="fa-solid fa-circle-check text-amber-400"></i>
+    <span id="toastMsg">Berhasil!</span>
+  </div>
 
-        // Data Pemesanan Awal
-        const bookings = [
-            { nama: "Siti Aminah", unit: "Villa Melati", tanggal: "2026-11-01", durasi: 3, total: 10500000, status: "Lunas" },
-            { nama: "Rina Kartika", unit: "Villa Cendana", tanggal: "2026-11-15", durasi: 1, total: 4800000, status: "Menunggu" },
-            { nama: "Budi Santoso", unit: "Villa Anggrek", tanggal: "2026-11-10", durasi: 2, total: 5600000, status: "Lunas" },
-            { nama: "Dedi Kurniawan", unit: "Villa Kenanga", tanggal: "2026-11-05", durasi: 1, total: 3200000, status: "Dibatalkan" }
-        ];
+  <script>
+   const units = [
+      { id: 1, name: "Villa Melati A1", type: "LB 120m² • 3 KT • Kolam Pribadi", price: 1450000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" },
+      { id: 2, name: "Villa Anggrek A2", type: "LB 90m² • 2 KT • Taman Asri", price: 980000000, status: "Terjual", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80" },
+      { id: 3, name: "Villa Cendana A3", type: "LB 160m² • 4 KT • Rooftop View", price: 2100000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=600&q=80" },
+      { id: 4, name: "Villa Kenanga A4", type: "LB 110m² • 3 KT • Gazebo", price: 1250000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80" },
+      { id: 5, name: "Villa Bougenville A5", type: "LB 85m² • 2 KT • Balkon", price: 890000000, status: "Terjual", img: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=600&q=80" },
+      { id: 6, name: "Villa Edelweiss B1", type: "LB 180m² • 4 KT • Private Pool", price: 2450000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=600&q=80" },
+      { id: 7, name: "Villa Flamboyan B2", type: "LB 130m² • 3 KT • Smart Home", price: 1650000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=600&q=80" },
+      { id: 8, name: "Villa Kamboja B3", type: "LB 75m² • 2 KT • Minimalis", price: 820000000, status: "Terjual", img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80" },
+      { id: 9, name: "Villa Teratai B4", type: "LB 220m² • 5 KT • Luxury Suite", price: 3200000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=600&q=80" },
+      { id: 10, name: "Villa Mawar B5", type: "LB 95m² • 2 KT • Carport Luas", price: 1050000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" },
+      { id: 11, name: "Villa Dahlia C1", type: "LB 105m² • 3 KT • Taman Depan", price: 1180000000, status: "Terjual", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80" },
+      { id: 12, name: "Villa Tulip C2", type: "LB 140m² • 3 KT • Semi Furnished", price: 1750000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=600&q=80" },
+      { id: 13, name: "Villa Sakura C3", type: "LB 115m² • 3 KT • Konsep Zen", price: 1380000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80" },
+      { id: 14, name: "Villa Lavender C4", type: "LB 80m² • 2 KT • Modern Tropis", price: 860000000, status: "Terjual", img: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=600&q=80" },
+      { id: 15, name: "Villa Azalea C5", type: "LB 150m² • 4 KT • Hook Posisi", price: 1950000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=600&q=80" },
+      { id: 16, name: "Villa Magnolia D1", type: "LB 170m² • 4 KT • Kolam Renang", price: 2250000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=600&q=80" },
+      { id: 17, name: "Villa Seruni D2", type: "LB 90m² • 2 KT • Cluster Aman", price: 940000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80" },
+      { id: 18, name: "Villa Alamanda D3", type: "LB 200m² • 4 KT • Mezzanine", price: 2800000000, status: "Terjual", img: "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=600&q=80" },
+      { id: 19, name: "Villa Yasmin D4", type: "LB 110m² • 3 KT • Dapur Bersih", price: 1290000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" },
+      { id: 20, name: "Villa Kemuning D5", type: "LB 125m² • 3 KT • Balkon Luas", price: 1520000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80" },
+      { id: 21, name: "Villa Wijaya E1", type: "LB 145m² • 3 KT • Smart Lock", price: 1820000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=600&q=80" },
+      { id: 22, name: "Villa Nusa E2", type: "LB 85m² • 2 KT • Minimalis", price: 875000000, status: "Terjual", img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80" },
+      { id: 23, name: "Villa Indah E3", type: "LB 190m² • 4 KT • Taman Belakang", price: 2600000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=600&q=80" },
+      { id: 24, name: "Villa Permata E4", type: "LB 240m² • 5 KT • Grand Residence", price: 3500000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=600&q=80" },
+      { id: 25, name: "Villa Berlian E5", type: "LB 135m² • 3 KT • 2 Carport", price: 1690000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=600&q=80" },
+      { id: 26, name: "Villa Zamrud F1", type: "LB 155m² • 4 KT • View Danau", price: 2050000000, status: "Terjual", img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80" },
+      { id: 27, name: "Villa Mutiara F2", type: "LB 100m² • 3 KT • Siap Huni", price: 1120000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=600&q=80" },
+      { id: 28, name: "Villa Safir F3", type: "LB 165m² • 4 KT • Kolam Pribadi", price: 2180000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" },
+      { id: 29, name: "Villa Rubi F4", type: "LB 92m² • 2 KT • Bebas Banjir", price: 960000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80" },
+      { id: 30, name: "Villa Kencana F5", type: "LB 210m² • 5 KT • Corner Luxury", price: 3100000000, status: "Tersedia", img: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=600&q=80" }
+    ];
+    
+    let bookings = [
+      { id: "VP-101", guest: "Andi Wijaya", unit: "Villa Anggrek", date: "2026-11-01", total: 980000000, status: "Lunas" },
+      { id: "VP-102", guest: "Siti Rahma", unit: "Villa Bougenville", date: "2026-11-03", total: 890000000, status: "Lunas" },
+      { id: "VP-103", guest: "Dimas Pratama", unit: "Villa Kamboja", date: "2026-11-05", total: 820000000, status: "Menunggu" }
+    ];
 
-        const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+    let currentUnitFilter = "Semua";
+    let revenueChartInstance = null;
 
-        // --- 1. LOGIKA LOGIN & LOGOUT ---
-        const loginPage = document.getElementById('loginPage');
-        const appLayout = document.getElementById('appLayout');
-        const loginPassword = document.getElementById('loginPassword');
-        const togglePasswordBtn = document.getElementById('togglePasswordBtn');
-        const togglePasswordIcon = document.getElementById('togglePasswordIcon');
-        let chartInstance = null;
+    const formatRp = (num) => "Rp " + num.toLocaleString("id-ID");
 
-        togglePasswordBtn.addEventListener('click', () => {
-            const isPass = loginPassword.type === 'password';
-            loginPassword.type = isPass ? 'text' : 'password';
-            togglePasswordIcon.className = isPass ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
-        });
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      document.getElementById("toastMsg").textContent = msg;
+      t.classList.remove("hidden");
+      setTimeout(() => t.classList.add("hidden"), 3000);
+    }
 
-        function enterDashboard() {
-            loginPage.classList.add('hidden');
-            appLayout.classList.remove('hidden');
-            appLayout.classList.add('flex');
-            populateUnitDropdown();
-            renderUnits(units);
-            renderBookings();
-            if (!chartInstance) initChart();
-            updateFinancials();
-            updateUnitStats();
-            showToast('Selamat datang di Dashboard Villa Permai!');
+    function togglePassword() {
+      const inp = document.getElementById("loginPassword");
+      const ico = document.getElementById("eyeIcon");
+      if (inp.type === "password") {
+        inp.type = "text";
+        ico.classList.replace("fa-eye", "fa-eye-slash");
+      } else {
+        inp.type = "password";
+        ico.classList.replace("fa-eye-slash", "fa-eye");
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("appPage").classList.remove("hidden");
+      initApp();
+      showToast("Berhasil masuk ke Dashboard Villa Permai");
+    });
+
+    function logout() {
+      document.getElementById("appPage").classList.add("hidden");
+      document.getElementById("loginPage").classList.remove("hidden");
+    }
+
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("-translate-x-full");
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+      document.getElementById("tab-" + tabName).classList.remove("hidden");
+
+      const titles = {
+        dashboard: "Dashboard Ringkasan",
+        units: "Katalog Unit Villa Permai",
+        bookings: "Data Penjualan Unit",
+        finance: "Laporan Keuangan",
+        settings: "Pengaturan"
+      };
+      document.getElementById("pageTitle").textContent = titles[tabName];
+
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        if (btn.dataset.tab === tabName) {
+          btn.classList.add("bg-emerald-800/80", "text-white");
+          btn.classList.remove("text-emerald-200");
+        } else {
+          btn.classList.remove("bg-emerald-800/80", "text-white");
+          btn.classList.add("text-emerald-200");
         }
+      });
 
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            enterDashboard();
-        });
+      if (window.innerWidth < 1024) {
+        document.getElementById("sidebar").classList.add("-translate-x-full");
+      }
+    }
 
-        function fillDemoCredentials() {
-            document.getElementById('loginEmail').value = 'admin@villapermai.com';
-            document.getElementById('loginPassword').value = 'admin123';
-            document.getElementById('rememberMe').checked = true;
-            showToast('Akun demo terisi! Klik "Masuk ke Dashboard".');
+    function initApp() {
+      populateUnitSelect();
+      document.getElementById("guestDate").valueAsDate = new Date();
+      renderAll();
+    }
+
+    function populateUnitSelect() {
+      const sel = document.getElementById("guestUnit");
+      sel.innerHTML = units.map(u => `<option value="${u.name}" data-price="${u.price}">${u.name} (${formatRp(u.price)})</option>`).join("");
+    }
+
+    function renderAll() {
+      updateKPIs();
+      renderUnits();
+      renderBookings();
+      renderFinance();
+      renderChart();
+    }
+
+    function updateKPIs() {
+      const paidTotal = bookings.filter(b => b.status === "Lunas").reduce((acc, b) => acc + b.total, 0);
+      const pendingCount = bookings.filter(b => b.status === "Menunggu").length;
+      const soldCount = units.filter(u => u.status === "Terjual").length;
+      const availableCount = units.length - soldCount;
+      const soldPct = Math.round((soldCount / units.length) * 100);
+
+      document.getElementById("kpiRevenue").textContent = formatRp(paidTotal);
+      document.getElementById("kpiBookings").textContent = bookings.length;
+      document.getElementById("kpiPendingNote").textContent = `${pendingCount} menunggu pelunasan`;
+      document.getElementById("kpiOccupancy").textContent = `${soldPct}%`;
+      document.getElementById("kpiUnitCount").textContent = `${soldCount} dari ${units.length} unit terjual`;
+      document.getElementById("kpiAvailable").textContent = availableCount;
+
+      const actList = document.getElementById("recentActivityList");
+      actList.innerHTML = bookings.slice().reverse().slice(0, 5).map(b => `
+        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100">
+          <div>
+            <p class="font-semibold text-slate-800">${b.guest}</p>
+            <p class="text-xs text-slate-500">${b.unit} • ${b.date}</p>
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${b.status === 'Lunas' ? 'bg-emerald-100 text-emerald-700' : b.status === 'Menunggu' ? 'bg-amber-100 text-amber-700' : 'bg-rose-100 text-rose-700'}">${b.status}</span>
+        </div>
+      `).join("");
+    }
+
+    function filterUnits(status) {
+      currentUnitFilter = status;
+      document.querySelectorAll(".unit-filter-btn").forEach(btn => {
+        if (btn.textContent.trim() === status) {
+          btn.className = "unit-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-800 text-white";
+        } else {
+          btn.className = "unit-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600";
         }
+      });
+      renderUnits();
+    }
 
-        function loginWithDemo() {
-            fillDemoCredentials();
-            enterDashboard();
+    function renderUnits() {
+      const grid = document.getElementById("unitsGrid");
+      const filtered = currentUnitFilter === "Semua" ? units : units.filter(u => u.status === currentUnitFilter);
+      grid.innerHTML = filtered.map(u => `
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition">
+          <div class="relative h-44">
+            <img src="${u.img}" alt="${u.name}" class="w-full h-full object-cover" />
+            <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold ${u.status === 'Tersedia' ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-white'}">${u.status}</span>
+          </div>
+          <div class="p-5">
+            <h4 class="font-bold text-slate-900 text-base">${u.name}</h4>
+            <p class="text-xs text-slate-500 mt-0.5">${u.type}</p>
+            <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+              <span class="font-extrabold text-emerald-800 text-sm sm:text-base">${formatRp(u.price)}</span>
+              <button onclick="openBookingModal('${u.name}')" class="px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold transition">Beli Unit</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderBookings() {
+      const q = document.getElementById("bookingSearch").value.toLowerCase();
+      const st = document.getElementById("bookingStatusFilter").value;
+      const tbody = document.getElementById("bookingsTableBody");
+
+      const filtered = bookings.filter(b =>
+        (b.guest.toLowerCase().includes(q) || b.unit.toLowerCase().includes(q)) &&
+        (st === "Semua" || b.status === st)
+      );
+
+      tbody.innerHTML = filtered.map((b) => `
+        <tr class="hover:bg-slate-50/80">
+          <td class="px-5 py-3.5 font-semibold text-slate-700">${b.id}</td>
+          <td class="px-5 py-3.5 font-medium text-slate-900">${b.guest}</td>
+          <td class="px-5 py-3.5 text-slate-600">${b.unit}</td>
+          <td class="px-5 py-3.5 text-slate-500">${b.date}</td>
+          <td class="px-5 py-3.5 font-bold text-slate-800">${formatRp(b.total)}</td>
+          <td class="px-5 py-3.5">
+            <button onclick="cycleStatus('${b.id}')" class="px-3 py-1 rounded-full text-xs font-semibold cursor-pointer transition ${b.status === 'Lunas' ? 'bg-emerald-100 text-emerald-700' : b.status === 'Menunggu' ? 'bg-amber-100 text-amber-700' : 'bg-rose-100 text-rose-700'}">
+              ${b.status}
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function cycleStatus(id) {
+      const order = ["Menunggu", "Lunas", "Dibatalkan"];
+      const item = bookings.find(b => b.id === id);
+      if (!item) return;
+      item.status = order[(order.indexOf(item.status) + 1) % order.length];
+      renderAll();
+      showToast(`Status ${item.id} diubah menjadi ${item.status}`);
+    }
+
+    function renderFinance() {
+      const paid = bookings.filter(b => b.status === "Lunas").reduce((a, b) => a + b.total, 0);
+      const pending = bookings.filter(b => b.status === "Menunggu").reduce((a, b) => a + b.total, 0);
+
+      document.getElementById("finPaid").textContent = formatRp(paid);
+      document.getElementById("finPending").textContent = formatRp(pending);
+      document.getElementById("finCount").textContent = `${bookings.filter(b => b.status !== "Dibatalkan").length} Transaksi`;
+
+      document.getElementById("financeTableBody").innerHTML = bookings.map(b => `
+        <tr>
+          <td class="px-5 py-3.5 text-slate-500">${b.date}</td>
+          <td class="px-5 py-3.5 font-medium text-slate-800">Penjualan ${b.unit} — ${b.guest}</td>
+          <td class="px-5 py-3.5">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${b.status === 'Lunas' ? 'bg-emerald-100 text-emerald-700' : b.status === 'Menunggu' ? 'bg-amber-100 text-amber-700' : 'bg-rose-100 text-rose-700'}">${b.status}</span>
+          </td>
+          <td class="px-5 py-3.5 text-right font-bold text-slate-900">${formatRp(b.total)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderChart() {
+      const ctx = document.getElementById("revenueChart").getContext("2d");
+      const currentPaid = bookings.filter(b => b.status === "Lunas").reduce((a, b) => a + b.total, 0);
+      if (revenueChartInstance) revenueChartInstance.destroy();
+
+      revenueChartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["Jun", "Jul", "Agu", "Sep", "Okt", "Nov"],
+          datasets: [{
+            label: "Penjualan (Rp)",
+            data: [980000000, 1450000000, 1250000000, 2100000000, 1650000000, currentPaid],
+            borderColor: "#065f46",
+            backgroundColor: "rgba(6, 95, 70, 0.1)",
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2.5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { ticks: { callback: val => "Rp " + (val / 1000000000).toFixed(1) + " M" } }
+          }
         }
+      });
+    }
 
-        function logout() {
-            appLayout.classList.add('hidden');
-            appLayout.classList.remove('flex');
-            loginPage.classList.remove('hidden');
-            showToast('Anda telah keluar dari sistem.');
-        }
+    function openBookingModal(unitName) {
+      if (unitName) document.getElementById("guestUnit").value = unitName;
+      document.getElementById("bookingModal").classList.remove("hidden");
+    }
 
-        // --- 2. NAVIGASI SPA ---
-        const pageTitles = {
-            dashboard: 'Dashboard',
-            units: 'Daftar Unit',
-            bookings: 'Data Pemesanan',
-            finance: 'Laporan Keuangan',
-            settings: 'Pengaturan'
-        };
+    function closeBookingModal() {
+      document.getElementById("bookingModal").classList.add("hidden");
+    }
 
-        function switchPage(pageKey) {
-            document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`page-${pageKey}`).classList.remove('hidden');
-            document.getElementById('topbarTitle').textContent = pageTitles[pageKey];
-
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                const isActive = btn.dataset.page === pageKey;
-                btn.className = isActive
-                    ? 'nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl bg-emerald-800/80 text-white font-semibold shadow-sm border border-emerald-700/50 transition-all text-left'
-                    : 'nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-emerald-100/80 hover:bg-emerald-800/50 hover:text-white font-medium transition-all text-left';
-            });
-
-            if (window.innerWidth < 1024) toggleSidebar(false);
-        }
-
-        // --- 3. RENDER UNIT & PEMESANAN ---
-        function populateUnitDropdown() {
-            const select = document.getElementById('inputUnit');
-            select.innerHTML = '<option value="">-- Pilih Unit --</option>' +
-                units.map(u => `<option value="${u.nama}">${u.nama} (${formatRupiah(u.harga)}/bln)</option>`).join('');
-        }
-
-        function updateUnitStats() {
-            const total = units.length;
-            const available = units.filter(u => u.status === 'Tersedia').length;
-            const occupied = units.filter(u => u.status === 'Terisi').length;
-            const occupancyRate = Math.round((occupied / total) * 100);
-
-            document.getElementById('kpiAvailableUnits').textContent = `${available} / ${total} Unit`;
-            document.getElementById('kpiOccupiedBadge').textContent = `${occupied} Unit Terisi`;
-            document.getElementById('kpiOccupancyRate').textContent = `${occupancyRate}%`;
-            document.getElementById('heroAvailableText').textContent = `${available} unit tersedia`;
-            document.getElementById('heroOccupiedText').textContent = `${occupied} unit terisi`;
-        }
-
-        function renderUnits(data) {
-            const unitGrid = document.getElementById('unitGrid');
-            unitGrid.innerHTML = '';
-            if (data.length === 0) {
-                unitGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400">Tidak ada unit yang sesuai dengan filter.</div>`;
-                return;
-            }
-            data.forEach(unit => {
-                const badgeClass = unit.status === "Tersedia"
-                    ? "bg-emerald-500 text-white"
-                    : unit.status === "Terisi"
-                        ? "bg-slate-800/85 text-slate-100"
-                        : "bg-amber-500 text-white";
-                const card = document.createElement('div');
-                card.className = "group bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col";
-                card.innerHTML = `
-                    <div class="relative h-44 bg-emerald-900 overflow-hidden">
-                        <img src="${unit.gambar}" alt="${unit.nama}" onerror="this.src='https://placehold.co/800x500/065f46/d1fae5?text=${encodeURIComponent(unit.nama)}'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold ${badgeClass}">${unit.status}</span>
-                        <span class="absolute bottom-3 left-3 text-white text-xs font-medium bg-black/45 backdrop-blur-sm px-2.5 py-1 rounded-lg"><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i> ${unit.blok}</span>
-                    </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-800">${unit.nama}</h3>
-                            <p class="text-emerald-700 font-extrabold text-base mb-3">${formatRupiah(unit.harga)} <span class="text-xs font-normal text-slate-500">/ bulan</span></p>
-                            <div class="grid grid-cols-2 gap-2 mb-4 text-xs text-slate-600">
-                                <div class="bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100"><i class="fa-solid fa-bed text-emerald-600 mr-1.5"></i> ${unit.kamar} Kamar</div>
-                                <div class="bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100"><i class="fa-solid fa-bath text-emerald-600 mr-1.5"></i> ${unit.mandi} Mandi</div>
-                                <div class="bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100"><i class="fa-solid fa-vector-square text-emerald-600 mr-1.5"></i> ${unit.luas}</div>
-                                <div class="bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100"><i class="fa-solid fa-wifi text-emerald-600 mr-1.5"></i> ${unit.ekstra}</div>
-                            </div>
-                        </div>
-                        <button onclick="openBookingModal('${unit.nama}')" class="w-full py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-sm font-bold transition-colors">
-                            <i class="fa-regular fa-calendar-plus mr-1.5"></i> Pesan Unit Ini
-                        </button>
-                    </div>`;
-                unitGrid.appendChild(card);
-            });
-        }
-
-        function renderBookings() {
-            const filterVal = document.getElementById('statusFilter').value;
-            const q = (document.getElementById('bookingSearchInput').value || document.getElementById('globalSearch').value).toLowerCase();
-            const tbody = document.getElementById('bookingTableBody');
-
-            const filtered = bookings.map((b, idx) => ({ ...b, idx }))
-                .filter(b => (filterVal === 'Semua' || b.status === filterVal) && (b.nama.toLowerCase().includes(q) || b.unit.toLowerCase().includes(q)));
-
-            tbody.innerHTML = filtered.length === 0
-                ? `<tr><td colspan="6" class="py-8 text-center text-slate-400">Tidak ada data pemesanan yang sesuai.</td></tr>`
-                : filtered.map(b => {
-                    const badge = b.status === 'Lunas' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : b.status === 'Menunggu' ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-rose-100 text-rose-800 border-rose-200';
-                    return `<tr class="hover:bg-slate-50/80">
-                        <td class="py-3.5 px-6 font-semibold text-slate-800">${b.nama}</td>
-                        <td class="py-3.5 px-6 text-slate-600">${b.unit}</td>
-                        <td class="py-3.5 px-6 text-slate-500">${b.tanggal}</td>
-                        <td class="py-3.5 px-6 text-slate-600">${b.durasi} Bulan</td>
-                        <td class="py-3.5 px-6 font-bold text-slate-800">${formatRupiah(b.total)}</td>
-                        <td class="py-3.5 px-6">
-                            <select onchange="changeBookingStatus(${b.idx}, this.value)" class="px-2.5 py-1 rounded-full text-xs font-bold border cursor-pointer focus:outline-none ${badge}">
-                                <option value="Lunas" ${b.status === 'Lunas' ? 'selected' : ''}>Lunas</option>
-                                <option value="Menunggu" ${b.status === 'Menunggu' ? 'selected' : ''}>Menunggu</option>
-                                <option value="Dibatalkan" ${b.status === 'Dibatalkan' ? 'selected' : ''}>Dibatalkan</option>
-                            </select>
-                        </td>
-                    </tr>`;
-                }).join('');
-
-            document.getElementById('kpiTotalBookings').textContent = bookings.length;
-            updateFinancials();
-        }
-
-        function changeBookingStatus(index, newStatus) {
-            bookings[index].status = newStatus;
-            renderBookings();
-            showToast(`Status pemesanan ${bookings[index].nama} diubah menjadi ${newStatus}.`);
-        }
-
-        function updateFinancials() {
-            const paidTotal = bookings.filter(b => b.status === 'Lunas').reduce((sum, b) => sum + b.total, 0);
-            const pendingTotal = bookings.filter(b => b.status === 'Menunggu').reduce((sum, b) => sum + b.total, 0);
-            const grandTotal = paidTotal + pendingTotal;
-
-            // Update KPI Dashboard
-            const kpiRevEl = document.getElementById('kpiTotalRevenue');
-            if (kpiRevEl) {
-                const juta = (paidTotal / 1000000).toFixed(1).replace('.', ',');
-                kpiRevEl.textContent = `Rp ${juta} Jt`;
-            }
-
-            // Update Kartu Laporan Keuangan
-            const paidEl = document.getElementById('financePaid');
-            const pendingEl = document.getElementById('financePending');
-            const totalEl = document.getElementById('financeTotal');
-            if (paidEl) paidEl.textContent = formatRupiah(paidTotal);
-            if (pendingEl) pendingEl.textContent = formatRupiah(pendingTotal);
-            if (totalEl) totalEl.textContent = formatRupiah(grandTotal);
-
-            // Update Tabel Rincian Keuangan
-            const fTbody = document.getElementById('financeTableBody');
-            if (fTbody) {
-                fTbody.innerHTML = bookings.map(b => {
-                    const badge = b.status === 'Lunas' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : b.status === 'Menunggu' ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-rose-100 text-rose-800 border-rose-200';
-                    return `<tr class="hover:bg-slate-50/80">
-                        <td class="py-3.5 px-6 font-semibold text-slate-800">${b.nama}</td>
-                        <td class="py-3.5 px-6 text-slate-600">${b.unit}</td>
-                        <td class="py-3.5 px-6 text-slate-500">${b.tanggal}</td>
-                        <td class="py-3.5 px-6 font-bold text-slate-800">${formatRupiah(b.total)}</td>
-                        <td class="py-3.5 px-6"><span class="px-3 py-1 rounded-full text-xs font-bold border ${badge}">${b.status}</span></td>
-                    </tr>`;
-                }).join('');
-            }
-
-            // Update Grafik Chart.js (bulan Nov = index 5)
-            if (chartInstance) {
-                chartInstance.data.datasets[0].data[5] = parseFloat((paidTotal / 1000000).toFixed(2));
-                chartInstance.update();
-            }
-        }
-
-        document.getElementById('statusFilter').addEventListener('change', renderBookings);
-        document.getElementById('bookingSearchInput').addEventListener('input', renderBookings);
-        document.getElementById('unitStatusFilter').addEventListener('change', (e) => {
-            const val = e.target.value;
-            renderUnits(val === 'Semua' ? units : units.filter(u => u.status === val));
-        });
-        document.getElementById('globalSearch').addEventListener('input', (e) => {
-            const q = e.target.value.toLowerCase();
-            renderUnits(units.filter(u => u.nama.toLowerCase().includes(q) || u.blok.toLowerCase().includes(q)));
-            renderBookings();
-        });
-
-        // --- 4. MODAL PEMESANAN & PENGATURAN ---
-        const bookingModal = document.getElementById('bookingModal');
-        function openBookingModal(unitName) {
-            if (unitName) document.getElementById('inputUnit').value = unitName;
-            bookingModal.classList.remove('hidden');
-            bookingModal.classList.add('flex');
-        }
-        function closeBookingModal() {
-            bookingModal.classList.add('hidden');
-            bookingModal.classList.remove('flex');
-        }
-
-        document.getElementById('bookingForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const nama = document.getElementById('inputNama').value;
-            const unitName = document.getElementById('inputUnit').value;
-            const tanggal = document.getElementById('inputTanggal').value;
-            const durasi = parseInt(document.getElementById('inputDurasi').value);
-            const status = document.getElementById('inputStatus').value;
-            const selectedUnit = units.find(u => u.nama === unitName);
-            const total = selectedUnit ? selectedUnit.harga * durasi : 0;
-
-            bookings.unshift({ nama, unit: unitName, tanggal, durasi, total, status });
-            renderBookings();
-            closeBookingModal();
-            e.target.reset();
-            showToast(`Pemesanan ${unitName} atas nama ${nama} berhasil disimpan!`);
-        });
-
-        document.getElementById('settingsForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            document.getElementById('topbarAdminName').textContent = document.getElementById('settingAdminName').value;
-            showToast('Pengaturan profil dan properti berhasil disimpan!');
-        });
-
-        // --- 5. SIDEBAR MOBILE, TOAST & CHART ---
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        function toggleSidebar(show) {
-            sidebar.classList.toggle('-translate-x-full', !show);
-            sidebarOverlay.classList.toggle('hidden', !show);
-        }
-        document.getElementById('openSidebarBtn').addEventListener('click', () => toggleSidebar(true));
-        document.getElementById('closeSidebarBtn').addEventListener('click', () => toggleSidebar(false));
-        sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').textContent = msg;
-            toast.classList.remove('hidden');
-            toast.classList.add('flex');
-            setTimeout(() => { toast.classList.add('hidden'); toast.classList.remove('flex'); }, 3500);
-        }
-
-        function initChart() {
-            const ctx = document.getElementById('revenueChart').getContext('2d');
-            const gradient = ctx.createLinearGradient(0, 0, 0, 260);
-            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.28)');
-            gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
-            chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov'],
-                    datasets: [{
-                        label: 'Pendapatan (Juta Rp)',
-                        data: [8.5, 10.2, 9.8, 12.4, 13.8, 16.1],
-                        borderColor: '#059669',
-                        backgroundColor: gradient,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#f59e0b',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointRadius: 5,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: true, position: 'top', align: 'end' } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => 'Rp ' + v + ' Jt' } },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
-        }
-    </script>
+    document.getElementById("bookingForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const sel = document.getElementById("guestUnit");
+      const price = Number(sel.options[sel.selectedIndex].dataset.price);
+      const newBooking = {
+        id: "VP-" + (101 + bookings.length),
+        guest: document.getElementById("guestName").value.trim(),
+        unit: sel.value,
+        date: document.getElementById("guestDate").value,
+        total: price,
+        status: document.getElementById("guestStatus").value
+      };
+      bookings.push(newBooking);
+      closeBookingModal();
+      document.getElementById("guestName").value = "";
+      renderAll();
+      showToast("Transaksi penjualan unit berhasil dicatat!");
+    });
+  </script>
 </body>
 </html>
