@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villa Permai</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Selamat Datang</h1>
+        <p>Website resmi perumahan Villa Permai</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#tentang">Beranda</a></li>
+            <li><a href="#daftar-vila">Daftar Perumahan</a></li>
+            <li><a href="#pemesanan">Pemesanan</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="tentang">
+            <h2>Tentang Villa Permai</h2>
+            <p>Vila Permai menyediakan tiga unit perumahan sewa yang nyaman.</p>
+        </section>
+
+        <section id="daftar-vila">
+            <h2>Daftar Perumahan</h2>
+            <input type="text" id="search-input" placeholder="Cari nama perumahan, lokasi, atau fasilitas...">
+            <div id="villa-list"></div>
+        </section>
+
+        <section id="pemesanan">
+            <h2>Formulir Pemesanan</h2>
+            <form id="booking-form">
+                <label for="nama-tamu">Nama Tamu:</label>
+                <input type="text" id="nama-tamu" placeholder="Masukkan nama lengkap">
+
+                <label for="pilihan-vila">Pilih Unit Perumahan:</label>
+                <select id="pilihan-vila">
+                    <option value="">-- Pilih Perumahan --</option>
+                </select>
+            </form>
+
+            <div id="area-hasil"></div>
+        </section>
+    </main>
+
+    <footer id="kontak">
+        <p>Kontak Pemilik: Pak Hendra - 0812-3456-7890</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
